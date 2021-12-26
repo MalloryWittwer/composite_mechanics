@@ -5,8 +5,11 @@ from dash.dependencies import Input, Output
 
 from serve_modulus import (
     modulus_wrapper, 
-    failure_wrapper, 
     get_modulus, 
+)
+
+from serve_failure import (
+    failure_wrapper, 
     get_max_stress,
     get_failure_mode
 )
@@ -19,13 +22,18 @@ server = app.server
 def serve_layout():
     layout = html.Div([
         
-        html.H1('Uniaxial composite mechanical design', id="app-title"),
+        html.H1('Composite ply mechanics under unidirectional load', id="app-title"),
         
         html.Div([
             
             html.Div([
                 html.Div([
                     html.Div([], id="intro-image"),
+                    html.Div([
+                        html.A("About", id="about", className="link-btn", n_clicks=0),
+                        html.A("View code", href="#", className="link-btn", target="_blank"),
+                    ], className="ref-links"),
+                    html.H5('\u00a9 Mallory Wittwer, 2021', className="copyright")
                 ], id="intro-wrapper"),
             ], id="intro", className="pannel"),
             
@@ -38,7 +46,7 @@ def serve_layout():
                             
                             html.Div([
                                 html.Div([
-                                    html.H3('Material', className="pannel-header"),
+                                    html.H3('Ply properties', className="pannel-header"),
                                     html.Div([
                                         html.Div([
                                             html.Label([
@@ -89,7 +97,7 @@ def serve_layout():
                             dcc.Graph(id="failure-plot", className="plot"),
                             html.Div([
                                 html.Div([
-                                    html.H3('Material', className="pannel-header"),
+                                    html.H3('Ply properties', className="pannel-header"),
                                     html.Div([
                                         html.Div([
                                             html.Label([
@@ -153,7 +161,7 @@ def update_elastic(e1, e2, shear_modulus, poisson_ratio, theta):
     elastic_fig = modulus_wrapper(e1, e2, poisson_ratio, shear_modulus)
     modulus = get_modulus(e1, e2, poisson_ratio, shear_modulus, theta)
     elastic_fig.add_vline(x=theta, line_width=1, line_color="#002833",
-                          annotation_text="E<sub>x</sub>= {:.1f} GPa".format(modulus), 
+                          annotation_text="E<sub>x</sub>: {:.1f} GPa".format(modulus), 
                           annotation_position="top")
     return elastic_fig
 
@@ -171,7 +179,7 @@ def update_failure(s1, s2, t12, theta):
     failure_fig.add_vline(x=theta, line_width=1, line_color="#002833",
                           annotation_text= (
                               "Tsai-Hill: {:.1f} MPa".format(max_stress) 
-                              + f"<br>Failure mode: {failure_mode}"
+                            #   + f"<br>Failure mode: {failure_mode}"
                               ), 
                           annotation_position="top")
     return failure_fig
