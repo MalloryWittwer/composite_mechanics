@@ -15,7 +15,10 @@ from serve_failure import (
 )
 
 app = dash.Dash(__name__, title='FDM laminate mechanics', 
-                external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css', dbc.themes.CYBORG])
+                external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css', dbc.themes.CYBORG],
+                meta_tags=[{'name': 'viewport', 
+                            'content': 'width=device.width, initial_scale=1.0'}]
+                )
 
 server = app.server   
 
@@ -30,8 +33,8 @@ def serve_layout():
                 html.Div([
                     html.Div([], id="intro-image"),
                     html.Div([
-                        html.A("About", href="https://mwittwer.notion.site/Composite-mechanics-375bd55f27be4e93a5077b9623882a97", className="link-btn", target="_blank"),
-                        html.A("View code", href="https://github.com/MalloryWittwer/composite_mechanics", className="link-btn", target="_blank"),
+                        html.A("Theory", href="https://mwittwer.notion.site/Composite-mechanics-375bd55f27be4e93a5077b9623882a97", className="link-btn", target="_blank"),
+                        html.A("Code", href="https://github.com/MalloryWittwer/composite_mechanics", className="link-btn", target="_blank"),
                     ], className="ref-links"),
                     html.P('\u00a9 Mallory Wittwer, 2021', className="copyright")
                 ], id="intro-wrapper"),
