@@ -107,7 +107,7 @@ def serve_layout():
                                                 dcc.Markdown(dangerously_allow_html=True, 
                                                             children=u"\u03c3<sub>1</sub>")    
                                             ], htmlFor="s1-input", id="s1-label"),
-                                            dcc.Input(type="number", value=110, min=0, id="s1-input")
+                                            dcc.Input(type="number", value=350, min=0, id="s1-input")
                                         ], id="s1-container", className="input-container"),
                                         dbc.Tooltip('Max stress - longitudinal [MPa]', target='s1-input', placement='top'),
                                         html.Div([
@@ -115,7 +115,7 @@ def serve_layout():
                                                 dcc.Markdown(dangerously_allow_html=True, 
                                                             children=u"\u03c3<sub>2</sub>")    
                                             ], htmlFor="s2-input", id="s2-label"),
-                                            dcc.Input(type="number", value=60, min=0, id="s2-input")
+                                            dcc.Input(type="number", value=150, min=0, id="s2-input")
                                         ], id="s2-container", className="input-container"),
                                         dbc.Tooltip('Max stress - transverse [MPa]', target='s2-input', placement='top'),
                                         html.Div([
@@ -123,7 +123,7 @@ def serve_layout():
                                                 dcc.Markdown(dangerously_allow_html=True, 
                                                             children=u"\u03c4<sub>12</sub>")    
                                             ], htmlFor="tau-input", id="tau-label"),
-                                            dcc.Input(type="number", value=40, min=0, id="tau-input")
+                                            dcc.Input(type="number", value=240, min=0, id="tau-input")
                                         ], id="tau-container", className="input-container"),
                                         dbc.Tooltip('Max shear stress [MPa]', target='tau-input', placement='top'),
                                     ], className="props-container"),
