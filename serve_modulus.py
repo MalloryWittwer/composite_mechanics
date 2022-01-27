@@ -10,10 +10,10 @@ def get_modulus(e1, e2, poisson_ratio, shear_modulus, theta):
     return modulus
 
 def reduced_stiffness_matrix(e1, e2, poisson_ratio, shear_modulus):
-    q11 = e1 / (1 - poisson_ratio**2)
-    q12 = poisson_ratio * e2 / (1 - poisson_ratio**2)
+    q11 = e1 * e2 / (e2 - poisson_ratio**2 * e1)
+    q22 = e2 * e2 / (e2 - poisson_ratio**2 * e1)
+    q12 = e1 * e2 * poisson_ratio / (e2 - poisson_ratio**2 * e1)
     q21 = q12
-    q22 = e2 / (1 - poisson_ratio**2)
     q66 = shear_modulus
     q_reduced = np.array([
         [q11, q12, 0],
@@ -28,14 +28,17 @@ def transformed_reduced_stiffness_matrix(q_reduced, theta):
     q22 = q_reduced[1, 1]
     q66 = q_reduced[2, 2]
     
-    qb11 = q11 * np.cos(theta)**4 + q22 * np.sin(theta)**4 + 2 * (q12 + 2 * q66) * np.sin(theta)**2 * np.cos(theta)**2
-    qb22 = q11 * np.sin(theta)**4 + q22 * np.cos(theta)**4 + 2 * (q12 + 2 * q66) * np.sin(theta)**2 * np.cos(theta)**2
-    qb66 = (q11 + q22 - 2* q12 - 2 * q66) * np.sin(theta)**2 * np.cos(theta)**2 + q66 * (np.sin(theta)**4 + np.cos(theta)**4)
-    qb12 = (q11 + q22 - 4 * q66) * np.sin(theta)**2 * np.cos(theta)**2 + q12 * (np.sin(theta)**4 + np.cos(theta)**4)
+    c = np.cos(theta)
+    s = np.sin(theta)
+    
+    qb11 = q11 * c**4 + q22 * s**4 + 2 * (q12 + 2 * q66) * s**2 * c**2
+    qb22 = q11 * s**4 + q22 * c**4 + 2 * (q12 + 2 * q66) * s**2 * c**2
+    qb66 = (q11 + q22 - 2* q12 - 2 * q66) * s**2 * c**2 + q66 * (s**4 + c**4)
+    qb12 = (q11 + q22 - 4 * q66) * s**2 * c**2 + q12 * (s**4 + c**4)
     qb21 = qb12
-    qb16 = (q11 - q12 - 2 * q66) * np.cos(theta)**3 * np.sin(theta) - (q22 - q12 - 2 * q66) * np.cos(theta) * np.sin(theta)**3
+    qb16 = c**3 * s * (q11 - q12) + c * s**3 * (q12 - q22) - 2 * c * s * (c**2 - s**2) * q66
     qb61 = qb16
-    qb26 = (q11 - q12 - 2 * q66) * np.cos(theta) * np.sin(theta)**3 - (q22 - q12 - 2 * q66) * np.cos(theta)**3 * np.sin(theta)
+    qb26 = c * s**3 * (q11 - q12) + c**3 * s * (q12 - q22) + 2 * c * s * (c**2 - s**2) * q66
     qb62 = qb26
     
     q_reduced_transformed = np.array([

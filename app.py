@@ -36,7 +36,7 @@ def serve_layout():
                         html.A("Theory", href="https://mwittwer.notion.site/Composite-mechanics-375bd55f27be4e93a5077b9623882a97", className="link-btn", target="_blank"),
                         html.A("Code", href="https://github.com/MalloryWittwer/composite_mechanics", className="link-btn", target="_blank"),
                     ], className="ref-links"),
-                    html.P('\u00a9 Mallory Wittwer, 2021', className="copyright")
+                    html.P('By Mallory Wittwer, 2021', className="copyright")
                 ], id="intro-wrapper"),
             ], id="intro", className="pannel"),
             
